@@ -1,14 +1,23 @@
-# Stage 1: Build
-FROM maven:3.8.5-openjdk-19 AS build
+# Etapa 1: Construcción del JAR con Maven + OpenJDK 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
+
+# Copiar archivos necesarios
 COPY pom.xml .
 COPY src src
 
+# Construir el proyecto (sin ejecutar tests)
 RUN mvn clean package -DskipTests
 
-# Stage 2: Run
-FROM openjdk:19-jdk
+# Etapa 2: Imagen final solo con el JAR y OpenJDK 21
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
+
+# Copiar el JAR generado
 COPY --from=build /app/target/*.jar app.jar
+
+# Exponer el puerto 8080
 EXPOSE 8080
+
+# Ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
