@@ -9,39 +9,42 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 
-/**
- *
- * @author bdgam
- */
 @Data
 @Entity
-@Table(name = "categoria")
-public class Categoria implements Serializable {
+@Table(name = "producto")
+public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria")
-    private Long idCategoria;
+    @Column(name = "id_producto")
+    private Long idProducto;
     private String descripcion;
+    private String detalle;
+    private double precio;
+    private int existencias;
     @Column(name = "ruta_imagen")
     private String rutaImagen;
     private boolean activo;
-
-    @OneToMany
-    @JoinColumn(name = "id_categoria")
-    List<Producto> productos;
-
-    public Categoria() {
-
+    
+    @ManyToOne
+    @JoinColumn(name="id_categoria")
+    Categoria categoria;
+    
+    public Producto (){
+        
     }
 
-    public Categoria(String descripcion, boolean activo) {
+
+    public Producto(String descripcion, String detalle, double precio, int existencias, String rutaImagen, boolean activo) {
         this.descripcion = descripcion;
+        this.detalle = detalle;
+        this.precio = precio;
+        this.existencias = existencias;
+        this.rutaImagen = rutaImagen;
         this.activo = activo;
     }
 
