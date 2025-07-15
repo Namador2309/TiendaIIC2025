@@ -78,5 +78,19 @@ public class PruebasController {
         model.addAttribute("precioSup", precioSup);
         return "/pruebas/listado2";
     }
+    
+@PostMapping("/queryStock")
+public String consultaQueryStock(
+        @RequestParam(value = "stockMin") int stockMin,
+        @RequestParam(value = "stockMax") int stockMax,
+        Model model) {
+
+    var productos = productoService.findByStockRange(stockMin, stockMax);
+    model.addAttribute("productos", productos);
+    model.addAttribute("totalProductos", productos.size());
+    model.addAttribute("stockMin", stockMin);
+    model.addAttribute("stockMax", stockMax);
+    return "/pruebas/listado2";
+}
 
 }

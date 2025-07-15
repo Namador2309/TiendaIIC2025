@@ -31,5 +31,9 @@ public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, do
 
     //Lista de productos utilizando consultas con JPQL    
     public List<Producto> metodoJPQL(double precioInf, double precioSup);
+    
+//    Lista por stock
+    public List<Producto> findByStockRange(int stockMin, int stockMax);
+
 
 }

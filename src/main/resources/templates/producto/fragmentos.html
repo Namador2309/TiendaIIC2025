@@ -16,7 +16,9 @@
                             type="button" 
                             class="btn btn-primary btn-block" 
                             data-bs-toggle="modal" 
-                            data-bs-target="#agregarProducto">
+                            data-bs-target="#agregarProducto"
+                            sec:authorize="hasRole('ROLE_ADMIN') "
+                            >
                             <i class="fas fa-plus"></i> [[#{producto.agregar}]]
                         </button>
                     </div>
@@ -25,7 +27,7 @@
         </section>
 
         <!-- 2 Fragmento para agregar producto, es la ventana modal -->
-        <section th:fragment="agregarProducto">
+        <section th:fragment="agregarProducto"sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_VENDEDOR')">
             <div id="agregarProducto" 
                  class="modal fade" 
                  tabindex="-1" 
@@ -35,7 +37,7 @@
                     <div class="modal-content">
                         <div class="modal-header bg-info text-white">
                             <h5 class="modal-title">[[#{producto.agregar}]]</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"sec:authorize="hasRole('ROLE_ADMIN')"></button>
                         </div> 
                         <form th:action="@{/producto/guardar}" th:object="${producto}"
                               method="POST" class="was-validated" enctype="multipart/form-data">
@@ -113,11 +115,11 @@
              <td  class="text-center" th:text="${producto.activo} ? 'Activa' : 'Inactiva'"/>​
                                             <td>[[${producto.categoria.descripcion}]]</td>​
                                             <td><a th:href="@{/producto/eliminar/}+${producto.idProducto}"​
-                                                   class="btn btn-danger">​
+                                                   class="btn btn-danger"sec:authorize="hasRole('ROLE_ADMIN') ">​
                                                     <i class="fas fa-trash"></i> [[#{accion.eliminar}]]</a></td>​
                                             <td>​
                                                 <a th:href="@{/producto/modificar/}+${producto.idProducto}"​
-                                                   class="btn btn-success">​
+                                                   class="btn btn-success"sec:authorize="hasRole('ROLE_ADMIN') ">​
                                                     <i class="fas fa-pencil"></i> [[#{accion.actualizar}]]</a></td></tr>​
                                     </tbody>​
                                 </table>​

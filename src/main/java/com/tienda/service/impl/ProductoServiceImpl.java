@@ -57,5 +57,10 @@ public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, do
     public List<Producto> metodoJPQL(double precioInf, double precioSup) {
         return productoDao.metodoJPQL(precioInf, precioSup);
     }
+    @Override
+public List<Producto> findByStockRange(int stockMin, int stockMax) {
+    return productoDao.findByStockRange(stockMin, stockMax);
+}
+
 
 }
